@@ -1,0 +1,24 @@
+ATACAREJO — PAINEL ADMINISTRATIVO + BANCO ONLINE
+
+Esta versão está preparada para PostgreSQL online (ex.: Supabase) e inclui:
+- painel administrativo protegido por login no servidor;
+- cadastro, edição e exclusão de produtos;
+- upload de fotos;
+- estoque;
+- preço de venda automático = custo de fábrica + 40% quando o preço não for informado;
+- página pública de produtos e detalhes;
+- carrinho e criação de pedidos;
+- pedidos salvos no PostgreSQL e baixa automática do estoque;
+- alteração de status dos pedidos no painel.
+
+IMPORTANTE: o banco ainda precisa ser criado/configurado com as credenciais da sua conta de PostgreSQL/Supabase. Não existe como colocar um banco online real dentro do arquivo ZIP sem as credenciais/conta do serviço.
+
+CONFIGURAÇÃO:
+1. Crie um projeto PostgreSQL/Supabase.
+2. Copie .env.example para .env.
+3. Preencha DATABASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD e JWT_SECRET.
+4. Rode: npm install
+5. Rode: npm start
+6. Abra / para a loja e /admin para o painel.
+
+PAGAMENTOS: a versão registra Pix/cartão/WhatsApp no pedido, mas ainda não faz cobrança automática. Para cobrança real será necessário integrar um gateway.
