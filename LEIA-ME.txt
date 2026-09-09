@@ -1,24 +1,43 @@
-ATACAREJO — PAINEL ADMINISTRATIVO + BANCO ONLINE
+ATACAREJO SITE NOVO — versão revisada
 
-Esta versão está preparada para PostgreSQL online (ex.: Supabase) e inclui:
-- painel administrativo protegido por login no servidor;
-- cadastro, edição e exclusão de produtos;
-- upload de fotos;
-- estoque;
-- preço de venda automático = custo de fábrica + 40% quando o preço não for informado;
-- página pública de produtos e detalhes;
-- carrinho e criação de pedidos;
-- pedidos salvos no PostgreSQL e baixa automática do estoque;
-- alteração de status dos pedidos no painel.
+Estrutura correta do projeto:
+- server.js
+- package.json
+- public/index.html
+- public/produto.html
+- public/carrinho.html
+- public/admin-login.html
+- public/admin.html
+- public/uploads/ (pasta vazia para imagens locais)
+- sql/schema.sql
+- sql/orders.sql
 
-IMPORTANTE: o banco ainda precisa ser criado/configurado com as credenciais da sua conta de PostgreSQL/Supabase. Não existe como colocar um banco online real dentro do arquivo ZIP sem as credenciais/conta do serviço.
+Correções desta versão:
+1. Corrigido o INSERT de produtos: a versão anterior tinha 20 campos e apenas 19 placeholders.
+2. Painel administrativo realmente usa múltiplas fotos (até 8), preços de varejo/atacado, mínimo atacado, fornecedor, origem e dimensões.
+3. Cadastro de fornecedores com nome, empresa, CEP, WhatsApp e observações.
+4. Produto vinculado a fornecedor/origem.
+5. Carrinho com botão Comprar funcionando e modal: continuar vendo produtos ou finalizar compra.
+6. Galeria de fotos no produto.
+7. Separação de remessas por origem no cálculo de frete.
+8. Preço de varejo padrão: custo x 1,40 (40% de acréscimo sobre o custo), quando não informado.
+9. SQL inclui migração para bancos antigos.
+10. Não há arquivos HTML duplicados na raiz: tudo fica dentro de public/.
 
-CONFIGURAÇÃO:
-1. Crie um projeto PostgreSQL/Supabase.
-2. Copie .env.example para .env.
-3. Preencha DATABASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD e JWT_SECRET.
-4. Rode: npm install
-5. Rode: npm start
-6. Abra / para a loja e /admin para o painel.
+Variáveis do Render/Supabase:
+- ADMIN_EMAIL
+- ADMIN_PASSWORD
+- DATABASE_URL
+- JWT_SECRET
+- OWN_STOCK_CEP=37795-970
+- WHATSAPP_NUMBER (se for usado em futura integração)
 
-PAGAMENTOS: a versão registra Pix/cartão/WhatsApp no pedido, mas ainda não faz cobrança automática. Para cobrança real será necessário integrar um gateway.
+Frete:
+O projeto já separa o carrinho por origem, mas o preço/prazo real do frete ainda precisa de credencial/API de um provedor (ex.: Melhor Envio ou Correios). Não inventa valor de frete.
+
+Importante sobre imagens:
+Este pacote salva uploads em public/uploads. No Render Free, o filesystem local pode ser apagado em reinícios/redeploys. Para produção, a próxima etapa recomendada é migrar as imagens para armazenamento persistente (ex.: Supabase Storage).
+
+Deploy:
+npm install
+npm start
